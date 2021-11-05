@@ -31,3 +31,25 @@ func NewService(db *gorm.DB) *Service {
 		DB: db,
 	}
 }
+
+// GetComment - retrieves comments by their ID from the database
+func (s *Service) GetComment(ID uint) (Comment, error) {
+	var comment Comment
+	if result := s.DB.First(&comment, ID); result.Error != nil {
+		return Comment{}, result.Error
+	}
+
+	return comment, nil
+}
+
+//GetCommentBySlug - retrieves all comments by slug ( path - /article/name)
+func (s *Service) GetCommentBySlug(slug string) ([]Comment, error) {
+	var comments []Comment
+	if result := s.DB.Find(&comments).Where("slug = ?", slug); result.Error != nil {
+		return []Comment{}, result.Error
+	}
+
+	return comments, nil
+}
+
+func (s *Service)
