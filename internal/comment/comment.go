@@ -1,6 +1,8 @@
 package comment
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+)
 
 // service - the struct for our comment service
 type Service struct {
@@ -52,4 +54,43 @@ func (s *Service) GetCommentBySlug(slug string) ([]Comment, error) {
 	return comments, nil
 }
 
-func (s *Service)
+// PostCOment - adds a new comment to the database
+func (s *Service) PostComment(comment Comment) (Comment, error) {
+	if result := s.DB.Save(&comment); result.Error != nil {
+		return Comment{}, result.Error
+	}
+
+	return comment, nil
+}
+
+// update comment - updates comment by idd with new comment info
+func (s *Service) UpdateComment(ID uint, newComment Comment) (Comment, error) {
+	comment, err := s.GetComment(ID)
+	if err != nil {
+		return Comment{}, err
+	}
+
+	if result := s.DB.Model(&comment).Update(newComment); result.Error != nil {
+		return Comment{}, result.Error
+	}
+	return comment, nil
+}
+
+// deletecomment - delete comment from database by id
+func (s *Service) DeleteComment(ID uint) error {
+	if result := s.DB.Delete(&Comment{}, ID); result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}
+
+// getALlComments - retrieves all coments from database
+func (s *Service) GetAllComments() ([]Comment, error) {
+	var comments []Comment
+	if result := s.DB.Find(&comments); result.Error != nil {
+		return comments, result.Error
+	}
+
+	return comments, nil
+}
