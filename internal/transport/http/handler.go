@@ -64,3 +64,45 @@ func (h *Handler) GetAllComment(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprint(w, "%+v", comments)
 }
+
+// post comment - adds a new comment
+func (h *Handler) PostComment(w http.ResponseWriter, r *http.Request) {
+	comment, err := h.Service.PostComment(comment.Comment{
+		SLug: "/",
+	})
+
+	if err != nil {
+		fmt.Fprintf(w, "failed to post new commnet")
+	}
+
+	fmt.Fprint(w, "%+v", comment)
+}
+
+// updateComment - update comment by ID
+func (h *Handler) UpdateComment(w http.ResponseWriter, r *http.Request) {
+	comment, err := h.Service.UpdateComment(1, comment.Comment{
+		SLug: "/new",
+	})
+	if err != nil {
+		fmt.Fprintf(w, "failed to update comment")
+	}
+	fmt.Fprintf(w, "%+v", comment)
+}
+
+//delete comment - deletes comment by id
+func (h *Handler) DeleteComment(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	commentID, err := strconv.ParseUint(id, 10, 64)
+	if err != nil {
+		fmt.Fprintf(w, "failed to parse uint from ID")
+	}
+
+	err = h.Service.DeleteComment(uint(commentID))
+	if err != nil {
+		fmt.Fprint(w, "failed to delete comment by comment id")
+	}
+
+	fmt.Fprint(w, "success deleted comment")
+
+}
