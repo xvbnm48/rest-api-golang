@@ -28,7 +28,7 @@ func (h *Handler) SetupRoutes() {
 	h.Router = mux.NewRouter()
 
 	h.Router.HandleFunc("/api/comment", h.GetAllComment).Methods("GET")
-	h.Router.HandleFunc("/api/comment", h.PostComment).Methods("GET")
+	h.Router.HandleFunc("/api/comment", h.PostComment).Methods("POST")
 	h.Router.HandleFunc("/api/comment/{id}", h.GetComment).Methods("GET")
 	h.Router.HandleFunc("/api/comment/{id}", h.UpdateComment).Methods("PUT")
 	h.Router.HandleFunc("/api/comment/{id}", h.DeleteComment).Methods("DELETE")
@@ -51,7 +51,7 @@ func (h *Handler) GetComment(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprint(w, "Error retrieving comment by id")
 	}
-	fmt.Fprint(w, "%+v", comment)
+	fmt.Fprintf(w, "%+v", comment)
 
 }
 
@@ -62,7 +62,7 @@ func (h *Handler) GetAllComment(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "fail to retrieve all comments")
 	}
 
-	fmt.Fprint(w, "%+v", comments)
+	fmt.Fprintf(w, "%+v", comments)
 }
 
 // post comment - adds a new comment
@@ -75,7 +75,7 @@ func (h *Handler) PostComment(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "failed to post new commnet")
 	}
 
-	fmt.Fprint(w, "%+v", comment)
+	fmt.Fprintf(w, "%+v", comment)
 }
 
 // updateComment - update comment by ID
