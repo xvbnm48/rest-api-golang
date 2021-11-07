@@ -5,7 +5,7 @@ tutorial disini [tutorial edge](https://tutorialedge.net/courses/go-rest-api-cou
 sudo chmod 666 /var/run/docker.sock
 
 ## yang di export
-    export DB_USERNAME = postgres
+    export DB_USERNAME=postgres
     export DB_PASSWORD=postgres
     export DB_HOST=localhost
     export DB_TABLE=postgres
