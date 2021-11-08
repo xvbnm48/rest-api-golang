@@ -12,5 +12,5 @@ sudo chmod 666 /var/run/docker.sock
     export DB_port=5432
     
 
-video 7 selesai
+video 14 selesai
 
