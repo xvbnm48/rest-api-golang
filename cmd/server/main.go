@@ -15,7 +15,7 @@ type App struct{}
 // RUn - set up our application
 func (app *App) Run() error {
 	fmt.Println("setting up our app")
-
+	// ini komentar
 	var err error
 	db, err := database.NewDatabase()
 	if err != nil {

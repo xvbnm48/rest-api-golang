@@ -1,0 +1,21 @@
+version: "3.8"
+
+services: 
+  db:
+    image: postgres:12.2-alphine
+    container_name: "comments-database"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    network:
+      - fullstack
+    volumes:
+      - database_postgres:/var/lib/postgressql/data
+      
+  api:
+    build .
+    container_name: "comments-rest-api"
+    
